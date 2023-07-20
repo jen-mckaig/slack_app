@@ -1,0 +1,14 @@
+# Glitch requirements file - use this one.
+boto3
+Flask
+Flask-APScheduler
+pandas
+pyyaml
+slack_bolt
+slack_sdk
+requests
+waitress
+
+# black
+# isort
+

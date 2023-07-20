@@ -1,0 +1,150 @@
+# If you change the text in your Slack App or Notion Board
+# update the config file to reflect those changes. 
+
+
+# configuration specific to creating s3 connections
+s3:
+  access_key: 'AWS_ACCESS_KEY_ID'
+  secret_key: 'AWS_SECRET_ACCESS_KEY'
+  bucket: 'AWS_S3_BUCKET'
+  endpoint_url: 'https://s3.us-east-2.amazonaws.com'
+
+# configuration specific to interacting with Slack API
+slack:
+  bot_token: 'SLACK_BOT_TOKEN'
+  app_token: 'SLACK_APP_TOKEN'
+  signing_secret: 'SLACK_SIGNING_SECRET'
+  team_channel_id: 'SLACK_CHANNEL_ID'
+  slack_args:
+    # sets the minimum ticket due date to X days from today
+    min_days_until_due: 2
+    
+    # text shown in Slack form UI 
+    form_title_text: 'Data Team Ticket'
+    form_greeting_text: ':sparkles: Thank you for reaching out! :sparkles: \n\n We are here to help. Please tell us a little about what you need and we will follow up with you soon.'
+    form_input_one_text: 'Your request in a few words.'
+    form_input_three_text: 'URL to supporting folder or docs.'
+    form_input_four_text: 'Briefly describe what you need help with.'
+    form_input_five_text: '*What is the deadline?*'
+
+    # If Slack form fields are changed, you will need to edit text & json fields below to match
+    # text -> the lables used in Slack app 
+    # json -> complex json payload keys after it is flattened
+    slack_json_keys:
+      slack_id:
+        text: 'slack_user_id'
+        json: 'user_id'
+      slack_ticket_title:
+        text: 'request_title'
+        json: 'view_state_values_input_one_title_value'
+      slack_drop_down_menu:
+        text: 'request_categories'
+        json:
+          - view_state_values_input_two_request_type_selected_options_0_text_text
+          - view_state_values_input_two_request_type_selected_options_1_text_text
+          - view_state_values_input_two_request_type_selected_options_2_text_text
+          - view_state_values_input_two_request_type_selected_options_3_text_text
+          - view_state_values_input_two_request_type_selected_options_4_text_text
+          - view_state_values_input_two_request_type_selected_options_5_text_text
+      slack_reference_url:
+        text: 'project_url'
+        json: 'view_state_values_input_three_important_links_value'
+      slack_ticket_text:
+        text: 'request_text'
+        json: 'view_state_values_input_four_request_details_value'
+      slack_ticket_due:
+        text: 'due_date'
+        json: 'view_state_values_input_five_duedate_selected_date'
+      
+    # emoji labels for request categories appearing in a drop down menu (form input #2)
+    request_categories:
+      data_category: '💡 Data'
+      dashboard_category: '🗺️ Dashboard'
+      visualization_category: '🌈 Visualization'
+      model_category: '🔦 Model'
+      engineering_category: '🔧 Engineering'
+      documentation_category: '📖 Documentation'   
+    
+  slack_messages:
+    success_msg_user: ":incoming_envelope: Your ticket was received. The Data Team will reach out with any questions shortly."
+    success_msg_team:  ":incoming_envelope: A new ticket was submitted by "
+    fail_msg_user: ":rotating_light: Uh oh! There is a problem, please try submitting your ticket again."
+    fail_msg_team: ":rotating_light: Uh oh! A ticket did not post to Notion. Please contact"
+
+
+
+# configuration specific to interacting with Notion APIs
+notion:
+  database_id: 'NOTION_DATABASE_ID'
+  token: 'NOTION_TOKEN'
+  pages_endpoint: 'NOTION_PAGES_ENDPOINT'
+  db_endpoint: 'NOTION_DB_ENDPOINT'
+  notion_args:
+    # If Notion page fields are changed,you will need to edit text & json fields below to match
+    # text -> the lables used in Notion project 
+    # json -> complex json payload keys after it is flattened
+    notion_page_title: 
+      text: 'request_title'
+      json: 'properties_title_title_0_text_content'
+    notion_page_due_date:  
+      text: 'due_date'
+      json: 'properties_due_date_date_start'
+    notion_page_requestor_name: 
+      text: 'requestor_name'
+      json: 'properties_requestor_name_rich_text_0_text_content'
+    notion_page_email: 
+      text: 'email'
+      json: 'properties_requestor_email_rich_text_0_text_content'
+    notion_page_request_details: 
+      text: 'request_text'
+    notion_page_request_type: 
+      text: 'request_categories'
+    notion_page_slack_id: 
+      text: 'slack_user_id'
+      json: 'properties_slack_id_rich_text_0_text_content'
+    notion_page_project_link:  
+      text: 'project_url'
+    notion_page_page_url:
+      text: 'ticket_url'
+      json: 'public_url'
+    notion_page_archive_status:
+      text: 'archived'
+      json: 'archived'
+    notion_page_ticket_id:
+      text: 'ticket_id'
+      json: 'id'
+    notion_page_status:
+      text: 'ticket_status'
+      json: 'properties_status_status_name'
+    notion_page_created_at:
+      text: 'created_at'
+      json: 'created_time'
+    notion_page_completion_labels:
+      text: 
+        - 'Work Completed'
+        - 'Launched'
+
+# target config
+meta_files:
+    # directories/prefix in s3 bucket
+    metafile_prefix: 'data_tickets'
+    notifications_log_prefix: 'notifications'
+
+# logging configuration
+logging:
+  version: 1
+  formatters:
+    ticketbot:
+      format: 'Ticketbot - %(asctime)s - %(levelname)s - %(message)s'
+  handlers:
+    console:
+      class: logging.StreamHandler
+      formatter: ticketbot
+      level: DEBUG
+  root:
+    level: DEBUG
+    handlers: [console]
+
+
+
+
