@@ -32,8 +32,10 @@ logger = logging.getLogger(__name__)
 
 # Instantiate the Slack Connector
 slack_config = config["slack"]
-slack_args = SlackSourceConfig(**slack_config["slack_args"])
 slack_messages = slack_config["slack_messages"]
+slash_command = slack_config["slash_command"]
+slack_args = SlackSourceConfig(**slack_config["slack_args"])
+
 slack_conn = SlackConnector(
     bot_token=slack_config["bot_token"],
     signing_secret=slack_config["signing_secret"],
@@ -61,7 +63,7 @@ s3_conn = S3BucketConnector(
 )
 
 
-@slack_conn._slack_app.command("/data-ticket")
+@slack_conn._slack_app.command(slash_command)
 def open_ticket(ack: callable, command: dict):
     ack()
 
