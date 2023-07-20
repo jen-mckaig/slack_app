@@ -10,7 +10,7 @@ To use this app you will need:
 4. AWS S3 bucket (~$3 a month)
 
 Move through these steps to set up your app:
-- [ ] Sign into Notion & copy this [template](https://jenmckaig.notion.site Data-Team-Tickets-976d4a8a3ec64449a3ee4f69d4e8bc1e?pvs=4) 
+- [ ] Sign into Notion & copy this [template] (https://jenmckaig.notion.site/jenmckaig/Data-Team-Tickets-976d4a8a3ec64449a3ee4f69d4e8bc1e)
 
 TO DO:
  - Test configs
