@@ -113,23 +113,23 @@ def background_jobs():
     # send notifications
     ticket_notifier.notify()
 
-    # S3 file cleanup date - delete anything older than last week
+    # S3 file cleanup date - delete anything older than yesterday
     yesterday = (datetime.today().date() - timedelta(days=1)).strftime(
         DateTimeFormats.datetime_format.value
     )
     # delete old notification logs
     MetaProcess.delete_meta_files(
-        s3_bucket_meta=s3_conn, prefix="notifications", date_threshold=yesterday
+        s3_bucket_meta=s3_conn, prefix=s3_config['notifications_log_prefix'], date_threshold=yesterday
     )
     # generate updated metafile
     metafile = MetaProcess.generate_meta_file(notion_meta=notion_conn)
     # load updated metafile
     MetaProcess.load_meta_file(
-        s3_bucket_meta=s3_conn, meta_file=metafile, prefix="data_tickets"
+        s3_bucket_meta=s3_conn, meta_file=metafile, prefix=s3_config['metafile_prefix']
     )
     # delete old metafiles
     MetaProcess.delete_meta_files(
-        s3_bucket_meta=s3_conn, prefix="data_tickets", date_threshold=yesterday
+        s3_bucket_meta=s3_conn, prefix=s3_config['metafile_prefix'], date_threshold=yesterday
     )
 
 

@@ -8,6 +8,9 @@ s3:
   secret_key: 'AWS_SECRET_ACCESS_KEY'
   bucket: 'AWS_S3_BUCKET'
   endpoint_url: 'https://s3.us-east-2.amazonaws.com'
+  # S3 Directories
+  metafile_prefix: 'data_tickets'
+  notifications_log_prefix: 'notifications'
 
 # configuration specific to interacting with Slack API
 slack:
@@ -124,12 +127,6 @@ notion:
       text: 
         - 'Work Completed'
         - 'Launched'
-
-# target config
-meta_files:
-    # directories/prefix in s3 bucket
-    metafile_prefix: 'data_tickets'
-    notifications_log_prefix: 'notifications'
 
 # logging configuration
 logging:
