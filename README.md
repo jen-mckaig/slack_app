@@ -3,7 +3,7 @@
 
 This is a simple Slack app to help field requests. I first made this when I was on a small data team (of two people) and we were fielding a high number of requests. I wanted to take advantage of the fact that everyone in the organization was already using Slack to make requests and this would be an easy tool to adopt. With this app, a slash command brings up a pop up form in Slack and the information entered into the form will become a ticket in Notion. The ticket is posted as a kanban card and automatically marked as unassigned. When the cards are assigned and moved through the different stages and into completion, a notification is posted in Slack to the ticket owner and to the team. Meta data from this process is stored in an S3 bucket.
 
-The config file is set up to allow you to make small changes to text and labels in this project without updating the code. If you choose to makes these changes, you will need to update the config file to reflect the changes. Since new labels and text will impact the json payloads, you will need to run ...this test... to see the new json keys and update them in the  config file.
+The config file is set up to allow you to make small changes to text and labels in this project without updating the code. If you choose to makes these changes, you will need to update the config file to reflect the changes. Since new labels and text will impact the json payloads, update the keys in the  config file.
 
 To setup the app you will need:
 1. Notion account
